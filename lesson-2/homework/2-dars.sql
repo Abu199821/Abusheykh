@@ -1,77 +1,113 @@
--- task 1
-CREATE TABLE employees ( 
+--Basic level tasks (10)
+CREATE TABLE Employee(
 EmpID int,
-Name Varchar(50),
-Salary Decimal(10,2));
---task 2
-INSERT INTO employees(EmpID,Name,Salary) VALUES (1,'JOHN', 2000);
+Name varchar(50),
+Salary DECIMAL (10,2)
+)
 
-INSERT INTO employees(EmpID,Name,Salary) VALUES (8,'Dilshod',4933);
---task 3
-SELECT * from employees;
-UPDATE employees SET Salary=4500 where EmpID=1;
---task 4
-DELETE FROM employees where EmpID=2;
---task 5
-CREATE TABLE CARS (NAME VARCHAR(20),YEAR INT,PRICE DECIMAL (8,1));
-INSERT INTO CARS ( 
-NAME,
-YEAR,
-PRICE)
-VALUES (
-'LACETTI',
-2008,
-3500);
-DELETE FROM CARS WHERE NAME='LACETTI';
-TRUNCATE table CARS;
-SELECT * FROM CARS;
-DROP TABLE CARS;
---Task 6
-ALTER TABLE	employees ALTER COLUMN Name Varchar(100);
---Task 7
-ALTER TABLE employees ADD DEPARTMENT Varchar(50);
-SELECT*FROM employees;
---Task 8
-ALTER TABLE employees ALTER COLUMN SALARY float(2);
---TASK 9
-CREATE TABLE Departments (DepartemntID int PRIMARY KEY,
-DepartmentName varchar(50),salary char(50));
---task 10 
-DROP TABLE employees;
---task 11
-ALTER TABLE Departments ADD Salary char(50);
-INSERT INTO Departments (DepartemntID,DepartmentName) SELECT DISTINCT 1,'Management';
-SELECT * FROM Departments;
-UPDATE Departments SET Salary=5000;
-INSERT INTO Departments (DepartemntID,DepartmentName,salary) SELECT DISTINCT 5,'IT Manager',3500;
-UPDATE Departments SET DepartmentName='IT_Manager' WHERE DepartmentName='IT Manager';
---Task 12
-UPDATE Departments Set DepartmentName='Manager' WHERE Salary>5000;
---Task 13
-TRUNCATE TABLE Departments;
---Task 15
-EXEC sp_rename 'Employees','StaffMembers';
---Task 16
-DROP TABLE StaffMembers;
---Task 17
-CREATE TABLE Products(ProductID int PRIMARY KEY,ProductName VARCHAR(20),Category VARCHAR(20),Price DECIMAL(12,2));
---Task 18
-ALTER TABLE Products ADD CONSTRAINT Price CHECK (Price>0);
---Task 19
-ALTER TABLE Products ADD StockQuantity int DEFAULT 50; 
---Task 20
-EXEC sp_rename 'Products.Category','ProductCategory','COLUMN';
-SELECT*from Products;
---Task 21
-INSERT INTO Products(ProductID,ProductName,ProductCategory,Price) VALUES (5,'Mandarin','Mevalar',7000);
---Task 22
-SELECT*INTO Products_Backup From Products;
-SELECT*FROM Products_Backup;
---Task 23
-EXEC sp_rename 'Products','inventory';
-SELECT*FROM inventory;
---Task 24
-ALTER TABLE inventory ALTER COLUMN Price DECIMAL(10,2);
---Task 25
-ALTER TABLE inventory ADD ProductCode int IDENTITY(1000,5);
-SELECT*FROM inventory
+INSERT INTO Employee(EmpID, Name, Salary) VALUES
+(1, 'JOHN EVANS', 5.400),
+(2, 'PAUL FORD', 7.200),
+(3, 'TOMMY GREEN', 3.800)
+
+UPDATE Employee
+SET SALARY = 6.40 
+WHERE EmpID = 1
+
+DELETE  FROM Employee
+WHERE EmpID =2
+
+--	Removes specific rows based on a condition
+--  Removes all rows in the table
+--  Removes all data (table is gone)
+
+ALTER TABLE Employee
+ALTER COLUMN NAME VARCHAR(100);
+
+ALTER TABLE Employee
+ADD DEPARTMENT VARCHAR(50);
+
+ALTER TABLE Employee
+ALTER COLUMN SALARY FLOAT
+
+
+
+CREATE TABLE DEPARTMENTS(
+DepartmentID INT PRIMARY KEY,
+DepartmentName VARCHAR(50),
+)
+
+UPDATE Employee
+SET DEPARTMENT = 'MANAGMENT'
+WHERE EmpID = 1
+
+UPDATE Employee
+SET DEPARTMENT = 'IT'
+WHERE EmpID = 3
+
+SELECT * from Employee
+
+--intermediate-Level Tasks (6)
+INSERT INTO DEPARTMENTS (DepartmentID, DepartmentName) VALUES
+(1, 'IT'),
+(2, 'MANAGMENT'),
+(3, 'MEDICINE'),
+(4, 'ACCOUNTING'),
+(5, 'SCIENCE')
+
+UPDATE EMPLOYEE
+SET DEPARTMENT = 'Management'
+WHERE Salary > 5000;
+
+ALTER TABLE EMPLOYEE
+DROP COLUMN DEPARMENT
+
+EXEC sp_rename 'Employee', 'StaffMembers';
+
+DROP TABLE DEPARMENTS
+SELECT * FROM StaffMembers
+
+--Advanced-Level Tasks (9)
+-- Create the PRODUCTS table with specified lengths for VARCHAR columns
+CREATE TABLE PRODUCTS (
+    ProductID INT PRIMARY KEY, 
+    ProductName VARCHAR(255),  -- Increased size to accommodate longer product names
+    ProductCategory VARCHAR(50),
+    Price DECIMAL(10, 2),
+    StockQuantity INT DEFAULT 50);
+
+-- Add CHECK constraint to ensure Price is greater than 0
+ALTER TABLE PRODUCTS
+ADD CONSTRAINT chk_price CHECK (Price > 0);
+
+
+-- Rename Category column to ProductCategory
+EXEC sp_rename 'PRODUCTS.Category', 'ProductCategory', 'COLUMN';
+
+-- Insert values into the PRODUCTS table
+INSERT INTO PRODUCTS (ProductID, ProductName, ProductCategory, Price, StockQuantity) 
+VALUES
+(1, 'Deodorant', 'Perfume', 3.00, 100),
+(2, 'Apple', 'Fruit', 4.00, 10),
+(3, 'Chocolate', 'Sweet', 2.00, 8),
+(4, 'Iphone', 'Tech', 1.30, 20),
+(5, 'TV ', 'Tech', 6.75, 30);
+
+SELECT * 
+INTO PRODUCT_BACKUP
+FROM PRODUCTS
+
+EXEC sp_rename 'PRODUCTS', 'Inventory';
+
+ALTER TABLE Inventory
+DROP CONSTRAINT chk_price;
+
+
+ALTER TABLE Inventory
+ALTER COLUMN Price FLOAT;
+
+ALTER TABLE Inventory
+ADD PRODUCT_CODE INT IDENTITY (1000,5);
+
+
+SELECT * FROM Inventory;
