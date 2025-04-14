@@ -91,3 +91,56 @@ HAVING AVG(Price)>400;
 SELECT Year(SaleDate) as Sale_Years,SUM(SaleAmount) as Tot_Sale_Years 
 FROM Sales
 GROUP BY Year(SaleDate);
+
+
+--Task(18) Write a query that uses COUNT to show the number of customers who placed at least 3 orders.
+SELECT CustomerID,count(SaleID) Sale_per_Custoemrs FROM Sales
+Group By CustomerID 
+Having Count(SaleID) >3;
+--Task(19) Write a query that applies the HAVING clause to filter out Departments with total salary expenses greater than 500,000.(DeptID is enough, if you don't have DeptName).
+SELECT DepartmentName,SUM(Salary) AS SALARY_GREATER_500000 from Employees
+GROUP BY DepartmentName
+HAVING SUM(Salary)>500000;
+
+--Task(20) Write a query that shows the average (AVG) sales for each product category, and then uses HAVING to filter categories with an average sales amount greater than 200.
+SELECT ProductID ,AVG(SaleAmount)AS AVG_SALES_PROD FROM Sales
+GROUP BY ProductID 
+HAVING AVG(SaleAmount)>200;
+
+--Task(21) Write a query to calculate the total (SUM) sales for each Customer, then filter the results using HAVING to include only Customers with total sales over 1500.
+SELECT CustomerID,SUM(SaleAmount) AS Tot_Sale_Cust
+FROM  Sales
+GROUP BY CustomerID 
+Having SUM(SaleAmount)>1500;
+--Task(22) Write a query to find the total (SUM) and average (AVG) salary of employees grouped by department, and use HAVING to include only departments with an average salary greater than 65000.
+SELECT DepartmentName,SUM(SALARY) AS TOT_SAL_DEP,AVG(SALARY) AS AVG_SAL_DEP 
+FROM Employees
+GROUP BY DepartmentName
+HAVING AVG(SALARY)>65000;
+
+--Task(23) Write a query that finds the maximum (MAX) and minimum (MIN) order value for each customer, and then applies HAVING to exclude customers with an order value less than 50.
+CREATE TABLE Orders ( OrderID INT PRIMARY KEY, CustomerID INT, ProductID INT, OrderDate DATE, Quantity INT, TotalAmount DECIMAL(10, 2), FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID), FOREIGN KEY (ProductID) REFERENCES Products(ProductID) );
+INSERT INTO Orders VALUES (1, 1, 2, '2023-05-14', 1, 800.00), (2, 1, 3, '2024-09-07', 2, 800.00), (3, 1, 4, '2022-11-22', 1, 250.00), (4, 1, 5, '2021-03-30', 3, 150.00),(5, 2, 6, '2025-07-19', 1, 30.00),(6, 3, 7, '2022-08-25', 2, 300.00), (7, 3, 8, '2024-06-10', 1, 200.00),(8, 4, 9, '2021-12-04', 4, 40.00),(9, 5, 10, '2023-02-18', 1, 10.00), (10, 5, 11, '2025-09-27', 2, 360.00),(11, 6, 12, '2023-10-11', 1, 500.00), (12, 6, 13, '2024-04-03', 1, 25.00), (13, 6, 14, '2022-07-29', 2, 60.00),(14, 7, 15, '2021-01-22', 3, 135.00),(15, 8, 16, '2025-11-15', 1, 80.00),(16, 9, 17, '2022-10-08', 1, 60.00), (17, 9, 18, '2023-06-21', 2, 40.00), (18, 9, 19, '2021-09-13', 5, 50.00),(19, 10, 20, '2025-03-05', 2, 50.00),(20, 11, 21, '2024-08-14', 1, 60.00), (21, 11, 22, '2022-12-01', 1, 100.00),(22, 12, 23, '2023-09-09', 1, 15.00), (23, 12, 24, '2021-07-18', 2, 180.00),(24, 13, 25, '2025-06-23', 3, 15.00),(25, 14, 26, '2023-03-12', 4, 100.00), (26, 14, 27, '2022-04-07', 1, 450.00),(27, 15, 28, '2024-11-30', 1, 600.00),(28, 16, 29, '2021-02-25', 1, 500.00),(29, 17, 30, '2025-05-28', 2, 240.00),(30, 18, 31, '2023-08-20', 1, 350.00), (31, 18, 32, '2022-01-17', 1, 450.00),(32, 19, 33, '2025-09-10', 1, 40.00),(33, 20, 34, '2021-04-04', 2, 100.00), (34, 20, 35, '2024-07-15', 3, 120.00), (35, 20, 36, '2022-10-31', 1, 60.00),(36, 21, 37, '2023-12-22', 1, 35.00),(37, 22, 38, '2021-06-06', 2, 110.00), (38, 22, 39, '2025-02-01', 1, 40.00),(39, 23, 40, '2023-11-26', 3, 120.00), (40, 24, 1, '2024-03-09', 1, 1200.00);
+
+SELECT CustomerID,MAX(TotalAmount) AS MAX_ORDERVALUE,MIN(TotalAmount) AS MIN_ORDERVALUE FROM ORDERS
+GROUP BY CustomerID
+HAVING MAX(TotalAmount)>50;
+
+--Task(24) Write a query that calculates the total sales (SUM) and counts distinct products sold in each month, and then applies HAVING to filter the months with more than 8 products sold.
+SELECT MONTH(OrderDate) as Months, SUM(TotalAmount) AS Tot_Sales_PerMonth,COUNT(DISTINCT ProductID) AS NUMBEROF_DIST_PRODUCTS 
+FROM Orders
+GROUP BY MONTH(OrderDate)
+HAVING COUNT(DISTINCT ProductID)>8;
+
+--Task(25) Write a query to find the MIN and MAX order quantity per Year. From orders table. (Do some research)
+
+SELECT YEAR(OrderDate) AS YEARLY,Min(Quantity) as Min_Quantity,Max(Quantity) as Max_Quantity
+FROM Orders
+GROUP BY YEAR(OrderDate);
+
+
+
+--Task(17) Write a query that calculates the total sales for each year in the Sales table, and use GROUP BY to group them.
+SELECT Year(SaleDate) as Sale_Years,SUM(SaleAmount) as Tot_Sale_Years 
+FROM Sales
+GROUP BY Year(SaleDate);
