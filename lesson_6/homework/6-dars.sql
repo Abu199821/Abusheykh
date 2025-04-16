@@ -1,4 +1,4 @@
-CREATE DATABASE homework_06
+CREATE DATABASE homework_6
 use Homework_6
 
 
