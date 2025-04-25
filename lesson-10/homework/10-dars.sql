@@ -31,10 +31,6 @@ full outer join Payments AS P
 ON O.OrderID=P.OrderID;
 
 
-
-
-
-
 -- TASK(6) Using the Employees table, write a query to show each employee's name along with the name of their manager.
 -- 🔁 Expected Output: EmployeeName, ManagerName
 select
@@ -183,9 +179,6 @@ ON P.OrderID=O.OrderID
 WHERE YEAR(P.PaymentDate)<2020 AND P.OrderID IS NULL;
 
 
-
-
-
 --TASK(21)Using the Products and Categories tables, write a query to return products that do not have a matching category.
 -- 🔁 Expected Output: ProductID, ProductName
 SELECT P.ProductID,P.ProductName FROM Products AS P
@@ -228,14 +221,12 @@ left join Courses as C
 on E.CourseID=C.CourseID and C.CourseName<>'Math 101'
 where C.CourseID is Null;
 
-
-
 --TASK(26)Using the Orders and Payments tables, write a query to return orders that are missing payment details.
-	--🔁 Expected Output: OrderID, OrderDate, PaymentID
-	select O.OrderID,O.OrderDate,P.PaymentID  from Orders AS O
-	left JOIN Payments AS P 
-	ON O.OrderID=P.OrderID
-	where P.PaymentID is null;
+--🔁 Expected Output: OrderID, OrderDate, PaymentID
+select O.OrderID,O.OrderDate,P.PaymentID  from Orders AS O
+left JOIN Payments AS P 
+ON O.OrderID=P.OrderID
+where P.PaymentID is null;
 --TASK(27)Using the Products and Categories tables, write a query to list products that belong to either the 'Electronics' or 'Furniture' category.
 -- 🔁 Expected Output: ProductID, ProductName, CategoryName
 
